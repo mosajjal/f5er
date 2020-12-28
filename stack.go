@@ -2,9 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/pr8kerl/f5er/f5"
 	"io/ioutil"
 	"log"
+
+	"github.com/mosajjal/f5er/f5"
 )
 
 type LBStack struct {

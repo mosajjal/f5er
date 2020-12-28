@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/jmcvetta/napping"
-	"github.com/pr8kerl/f5er/f5"
+	"github.com/mosajjal/f5er/f5"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -14,6 +14,7 @@ import (
 var (
 	appliance           *f5.Device
 	f5Host              string
+	config              string
 	username            string
 	passwd              string
 	cfgName             = "f5"
@@ -36,6 +37,7 @@ func initialiseConfig() {
 	viper.SetConfigName(cfgName)
 	viper.AddConfigPath("$HOME/.f5")
 	viper.AddConfigPath(".")
+	viper.AddConfigPath(f5Cmd.PersistentFlags().Lookup("input"))
 	viper.SetDefault("username", "admin")
 	viper.SetDefault("debug", false)
 	viper.SetDefault("token", false)
@@ -109,6 +111,7 @@ func checkRequiredFlag(flg string) {
 func init() {
 
 	f5Cmd.PersistentFlags().StringVarP(&f5Host, "f5", "f", "", "IP or hostname of F5 to poke")
+	f5Cmd.PersistentFlags().StringVarP(&config, "config", "c", ".", "Configuration file path")
 	f5Cmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "debug output")
 	f5Cmd.PersistentFlags().BoolVarP(&token, "token", "t", false, "use token auth")
 	f5Cmd.PersistentFlags().StringVarP(&f5Input, "input", "i", "", "input json f5 configuration")
